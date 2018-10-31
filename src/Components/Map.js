@@ -1,9 +1,12 @@
 import React, { Component } from 'react';
-class Map extends Component {
+import { GoogleApiWrapper } from 'google-maps-react';
+export class Map extends Component {
     render() {
         return (
-            <div>Map</div>
+            <div id="map">Map</div>
         )
     }
 }
-export default Map;
+export default GoogleApiWrapper({
+    apiKey: 'AIzaSyCVjG1_rpwST332EGF3YRDaSO0ez-ws_aw'
+})(Map)
