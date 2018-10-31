@@ -7,10 +7,10 @@ class App extends Component {
   state = {
     places: [
       {
-        title: "Comedy Store",
+        title: "My Home",
         location: {
-          lat: 34.095169,
-          lng: -118.373918
+          lat: 37.974542,
+          lng: -122.278016
         }
       }
     ]
