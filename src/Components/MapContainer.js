@@ -10,11 +10,25 @@ class MapContainer extends Component {
         activeMarker: {},
         selectedPlace: {},
         likes: '',
-        img: ''
+        img: '',
+        currentPlaces: []
     };
 
     componentDidMount() {
         this.setBounds();
+        this.updateCurrentPlaces();
+    }
+
+    updateCurrentPlaces = (query) => {
+        if (query && query.length) {
+            this.setState({
+                currentPlaces:
+                    this.props.places.filter((place) => place.name.toLowerCase().includes(query.toLowerCase()))
+            });
+        }
+        else {
+            this.setState({ currentPlaces: this.props.places });
+        }
     }
 
     setBounds = () => {
@@ -70,7 +84,7 @@ class MapContainer extends Component {
     
         return (
             <div>
-                <MapNav places={this.props.places}></MapNav>
+                <MapNav places={this.state.currentPlaces} onChange={this.updateCurrentPlaces}></MapNav>
                 <Map
                     google={this.props.google}
                     zoom={14}
@@ -78,7 +92,7 @@ class MapContainer extends Component {
                     initialCenter={this.props.places[0].location}
                     bounds={this.state.bounds}
                 >
-                    {this.props.places.map((place, index) =>
+                    {this.state.currentPlaces.map((place, index) => 
                         <Marker
                             key={index}
                             name={place.name}
