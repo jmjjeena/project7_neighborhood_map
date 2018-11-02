@@ -23,8 +23,16 @@ class MapContainer extends Component {
         this.setState({ bounds });
     }
 
+    getFourSquare = (lat, lng, name) => {
+        fetch(`https://api.foursquare.com/v2/venues/search?client_id=E5UCHG55OHFZ2LIQ55W3XTLPVC1411IT1SKV33LG2GN1QX5R&client_secret=IAOLSWF02K2G1F01TYPTMMFUGONS0IMLHMTHH1E3RQ3BFM0U&v=20181101&limit=1&ll=${lat},${lng}&query=${name}`)
+            .then((response) => response.json())
+            .then((response) => console.log(response))
+    }
+
     onMarkerClick = (props, marker) => {
-        console.log('Props: ', props)
+        console.log('Marker', marker);
+        console.log('Props', props);
+        this.getFourSquare(props.position.lat, props.position.lng, props.title);
         this.setState({
             showingInfoWindow: true,
             activeMarker: marker,
