@@ -23,16 +23,30 @@ class MapContainer extends Component {
         this.setState({ bounds });
     }
 
-    getFourSquare = (lat, lng, name) => {
-        fetch(`https://api.foursquare.com/v2/venues/search?client_id=E5UCHG55OHFZ2LIQ55W3XTLPVC1411IT1SKV33LG2GN1QX5R&client_secret=IAOLSWF02K2G1F01TYPTMMFUGONS0IMLHMTHH1E3RQ3BFM0U&v=20181101&limit=1&ll=${lat},${lng}&query=${name}`)
-            .then((response) => response.json())
-            .then((response) => console.log(response))
+    getFourSquareData = (lat, lng, name) => {
+        this.getFourSquareVenueID(lat, lng, name).then((venueId) => {
+            this.getFourSquareVenueInfo(venueId).then((venueInfo) => {
+                console.log(venueInfo);
+            });
+        });
     }
 
-    onMarkerClick = (props, marker) => {
-        console.log('Marker', marker);
-        console.log('Props', props);
-        this.getFourSquare(props.position.lat, props.position.lng, props.title);
+    getFourSquareVenueID = (lat, lng, name) => {
+        return fetch(`https://api.foursquare.com/v2/venues/search?client_id=E5UCHG55OHFZ2LIQ55W3XTLPVC1411IT1SKV33LG2GN1QX5R&client_secret=IAOLSWF02K2G1F01TYPTMMFUGONS0IMLHMTHH1E3RQ3BFM0U&v=20181101&limit=1&ll=${lat},${lng}&query=${name}`)
+            .then((response) => response.json())
+            .then((response) => response.response.venues[0].id);
+    }
+
+    getFourSquareVenueInfo = (venueId) => {
+        return fetch(`https://api.foursquare.com/v2/venues/${venueId}?client_id=X4CMVBAJQSVZYXB45ZGE3GNA43RTCMPQTM4PUIKMQHFYWUVX&client_secret=ODC00AI1UEPGLLYLVUOY1JM30NE1XADBZRJMUNXKXPSZKNTR&v=20180323`)
+            .then((response) => response.json())
+            .then((response) => response.response.venue);
+    }
+
+        onMarkerClick = (props, marker) => {
+        // console.log('Marker', marker);
+        // console.log('Props', props);
+        this.getFourSquareData(props.position.lat, props.position.lng, props.title);
         this.setState({
             showingInfoWindow: true,
             activeMarker: marker,
