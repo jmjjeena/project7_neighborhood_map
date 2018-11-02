@@ -8,7 +8,9 @@ class MapContainer extends Component {
         bounds: {},
         showingInfoWindow: false,
         activeMarker: {},
-        selectedPlace: {}
+        selectedPlace: {},
+        likes: '',
+        img: ''
     };
 
     componentDidMount() {
@@ -24,9 +26,15 @@ class MapContainer extends Component {
     }
 
     getFourSquareData = (lat, lng, name) => {
+        const size = 100;
         this.getFourSquareVenueID(lat, lng, name).then((venueId) => {
             this.getFourSquareVenueInfo(venueId).then((venueInfo) => {
                 console.log(venueInfo);
+                this.setState({
+                    likes: venueInfo.likes.count,
+                    photo: venueInfo.bestPhoto.prefix + size + venueInfo.bestPhoto.suffix
+                });
+                console.log(this.state.photo);
             });
         });
     }
@@ -83,6 +91,8 @@ class MapContainer extends Component {
                 >
                     <div>
                         <h1>{this.state.selectedPlace.name}</h1>
+                        <img src={this.state.photo} alt={this.state.selectedPlace.name} />
+                        <h3>Likes: {this.state.likes}</h3>
                     </div>
                 </InfoWindow>
             </Map>
