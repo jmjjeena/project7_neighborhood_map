@@ -20,12 +20,12 @@ class MapNav extends Component {
         return (
             <div className="map-nav-container">
                 <nav className="map-nav">
-                    <div className="hamburger-container" onClick={this.onHamburgerClick}> 
+                    <div className="hamburger-container" onClick={this.onHamburgerClick}>
                         <div className="hamburger-bar"></div>
                         <div className="hamburger-bar"></div>
                         <div className="hamburger-bar"></div>
                     </div>
-                    <h1 className="nav-title">Must See San Francisco Attractions</h1>
+                    <h1 className="nav-title">Must See SF Attractions</h1>
                 </nav>
                 <div className="map-sidebar">
                     <input className="sidebar-input"></input>
@@ -34,9 +34,9 @@ class MapNav extends Component {
                             return <li>{place.name}</li>
                         })}
                     </ul>
-                </div>
+                </div>        
             </div>
-        )
+        );
     }
 }
 export default MapNav;
