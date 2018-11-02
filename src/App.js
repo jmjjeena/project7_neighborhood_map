@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import './App.css';
-import MapContainer from './Components/MapContainer';
-import MapNav from './Components/MapNav';
+import MapContainer from './components/MapContainer';
 
 class App extends Component {
 
@@ -59,17 +58,10 @@ class App extends Component {
     ]
   };
   render() {
-    const style = {
-      width: '100%',
-      position: 'absolute',
-      background: 'white'
-    };
     return (
       <div className="App">
         <MapContainer places={this.state.places} />
-        <div style={style}>
-          <MapNav />
-        </div>
+        
       </div>
     );
   }

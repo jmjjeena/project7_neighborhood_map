@@ -2,9 +2,55 @@
   text-align: center;
 }
 
+body, html {
+  max-width: 100%;
+  overflow: hidden;
+}
+ .map-nav-container {
+  overflow: hidden;
+}
+
 .map-nav {
+  position: absolute;
+  background: white;
+  width: 100%;
   display: flex;
   padding: .8rem;
+  z-index: 1;
+}
+
+.map-nav h1 {
+  min-width: 100%
+}
+
+.map-sidebar {
+  position: absolute;
+  margin-top: 75px;
+  width: 250px;
+  height: 100%;
+  background-color: white;
+  border-top: 1px solid;
+  z-index: 1;
+  transform: translate(-250px);
+}
+
+.sidebar-input {
+  margin-top: 1rem;
+}
+
+.map-sidebar ul {
+  list-style: none;
+  padding: 0;
+}
+
+.map-sidebar li {
+  padding: 1rem;
+  cursor: pointer;
+}
+
+ .map-sidebar li:hover {
+  background-color: black;
+  color: white;
 }
 
 /* Hamburger from W3 schools */
