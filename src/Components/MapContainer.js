@@ -42,7 +42,8 @@ class MapContainer extends Component {
             width: '100%',
             height: '100%'
         };
-    
+        console.log(this.props.requestAvailable)
+
         return (
             <div>
                 <Map
@@ -66,12 +67,21 @@ class MapContainer extends Component {
                     <InfoWindow
                         marker={this.state.activeMarker}
                         visible={this.state.showingInfoWindow}
+
                     >
-                        <div>
-                            <h1>{this.state.selectedPlace.name}</h1>
-                            <img src={this.state.selectedPlace.img} alt={this.state.selectedPlace.name} />
-                            <h3>Likes: {this.state.selectedPlace.likes}</h3>
-                        </div>
+                        {!this.props.requestAvailable ? (
+                            <div>
+                                <h1>{this.state.selectedPlace.name}</h1>
+                                <h3>Exceeded FourSquare API limit</h3>
+                            </div>
+                        ) : (
+                                <div>
+                                    <h1>{this.state.selectedPlace.name}</h1>
+                                    <img src={this.state.selectedPlace.img} alt={this.state.selectedPlace.name} />
+                                    <h3>Likes: {this.state.selectedPlace.likes}</h3>
+                                </div>
+                            )
+                        }
                     </InfoWindow>
                 </Map>
             </div>
