@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Map, InfoWindow, Marker, GoogleApiWrapper } from 'google-maps-react';
-import * as FourSquareAPI from '../APIs/FourSquare'
+
 
 class MapContainer extends Component { 
     state = {
@@ -27,29 +27,12 @@ class MapContainer extends Component {
     }
 
     onMarkerClick = (props, marker) => {
-        this.getFourSquareData(props.position.lat, props.position.lng, props.title);
+        const place = this.props.places.filter((place) => place.name === props.title)
         this.setState({
             showingInfoWindow: true,
             activeMarker: marker,
-            selectedPlace: props,
+            selectedPlace: place[0],
         });
-    }
-
-     // Fetch FourSquare data
-    getFourSquareData = (lat, lng, name) => {
-        const size = 100;
-        FourSquareAPI.getFourSquareVenueID(lat, lng, name)
-            .then((venueId) => {
-                FourSquareAPI.getFourSquareVenueInfo(venueId)
-                    .then((venueInfo) => {
-                        this.setState({
-                            likes: venueInfo.likes.count,
-                            photo: venueInfo.bestPhoto.prefix + size + venueInfo.bestPhoto.suffix
-                        });
-                    })
-                    .catch((e) => console.log(e));
-            })
-            .catch((e) => console.log(e));
     }
 
     render() {
@@ -84,8 +67,8 @@ class MapContainer extends Component {
                     >
                         <div>
                             <h1>{this.state.selectedPlace.name}</h1>
-                            <img src={this.state.photo} alt={this.state.selectedPlace.name} />
-                            <h3>Likes: {this.state.likes}</h3>
+                            <img src={this.state.selectedPlace.img} alt={this.state.selectedPlace.name} />
+                            <h3>Likes: {this.state.selectedPlace.likes}</h3>
                         </div>
                     </InfoWindow>
                 </Map>
