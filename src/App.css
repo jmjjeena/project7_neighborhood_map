@@ -28,6 +28,14 @@
 .nav-title {
   margin: auto;
 }
+
+.nav-title h1 {
+  margin: 0;
+}
+ .nav-title h4 {
+  margin: 0;
+}
+
  /* Hamburger from W3 schools */
  .hamburger-container {
   margin-left: .2rem;
@@ -65,7 +73,7 @@
   padding: 0;
 }
 
-.map-sidebar button {
+.map-sidebar li {
   padding: 1rem;
   cursor: pointer;
   width: 100%;    
@@ -73,7 +81,7 @@
   border: 0px;
 }
 
- .map-sidebar button:hover {
+ .map-sidebar li:hover {
   background-color: black;
   color: white;
 }
