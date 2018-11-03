@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import './App.css';
 import MapContainer from './components/MapContainer';
+import MapNav from "./components/MapNav";
 
 class App extends Component {
 
@@ -55,13 +56,32 @@ class App extends Component {
           lng: -122.485113
         }
       },
-    ]
+    ],
+    currentPlaces: []
   };
+
+  componentDidMount() {
+    this.setState({ currentPlaces: this.state.places });
+  }
+  filterPlaces = (query) => {
+    if (!query) {
+      this.setState({ currentPlaces: [] });
+    }
+    const filteredPlaces = this.state.places.filter((place) => place.name.toLowerCase().includes(query.toLowerCase()));
+    console.log(filteredPlaces);
+    this.setState({ currentPlaces: filteredPlaces });
+  }
+
+  setActiveMarker = (marker) => {
+    console.log(marker);
+    document.querySelector(`[title="${marker}"]`).click();
+  }
+
   render() {
     return (
       <div className="App">
-        <MapContainer places={this.state.places} />
-        
+        <MapNav places={this.state.currentPlaces} onQuery={this.filterPlaces} setActiveMarker={this.setActiveMarker} />
+        <MapContainer places={this.state.currentPlaces} centerCoords={this.state.places[0].location} activeMarker={this.state.activeMarker} showingInfoWindow={this.state.showingInfoWindow} /> 
       </div>
     );
   }

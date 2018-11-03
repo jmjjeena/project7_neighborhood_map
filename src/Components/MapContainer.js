@@ -1,34 +1,20 @@
 import React, { Component } from 'react';
 import { Map, InfoWindow, Marker, GoogleApiWrapper } from 'google-maps-react';
-import MapNav from './MapNav';
+
 
 
 class MapContainer extends Component { 
     state = {
         bounds: {},
-        showingInfoWindow: false,
-        activeMarker: {},
         selectedPlace: {},
         likes: '',
         img: '',
-        currentPlaces: []
+        activeMarker: {},
+        showingInfoWindow: true
     };
 
     componentDidMount() {
         this.setBounds();
-        this.updateCurrentPlaces();
-    }
-
-    updateCurrentPlaces = (query) => {
-        if (query && query.length) {
-            this.setState({
-                currentPlaces:
-                    this.props.places.filter((place) => place.name.toLowerCase().includes(query.toLowerCase()))
-            });
-        }
-        else {
-            this.setState({ currentPlaces: this.props.places });
-        }
     }
 
     setBounds = () => {
@@ -39,28 +25,33 @@ class MapContainer extends Component {
         this.setState({ bounds });
     }
 
+    // FourSquare API get Data functions
     getFourSquareData = (lat, lng, name) => {
         const size = 100;
-        this.getFourSquareVenueID(lat, lng, name).then((venueId) => {
-            this.getFourSquareVenueInfo(venueId).then((venueInfo) => {
-                console.log(venueInfo);
-                this.setState({
-                    likes: venueInfo.likes.count,
-                    photo: venueInfo.bestPhoto.prefix + size + venueInfo.bestPhoto.suffix
-                });
-                console.log(this.state.photo);
-            });
-        });
+        this.getFourSquareVenueID(lat, lng, name)
+            .then((venueId) => {
+                this.getFourSquareVenueInfo(venueId)
+                    .then((venueInfo) => {
+                        this.setState({
+                            likes: venueInfo.likes.count,
+                            photo: venueInfo.bestPhoto.prefix + size + venueInfo.bestPhoto.suffix
+                        });
+                    })
+                    .catch((e) => console.log('Failed request for venue info, Error:', e));
+            })
+            .catch((e) => console.log('Failed request for venue ID, Error:', e));
     }
 
     getFourSquareVenueID = (lat, lng, name) => {
         return fetch(`https://api.foursquare.com/v2/venues/search?client_id=E5UCHG55OHFZ2LIQ55W3XTLPVC1411IT1SKV33LG2GN1QX5R&client_secret=IAOLSWF02K2G1F01TYPTMMFUGONS0IMLHMTHH1E3RQ3BFM0U&v=20181101&limit=1&ll=${lat},${lng}&query=${name}`)
+            .catch((e) => console.log('Error: ', e))
             .then((response) => response.json())
             .then((response) => response.response.venues[0].id);
     }
 
     getFourSquareVenueInfo = (venueId) => {
         return fetch(`https://api.foursquare.com/v2/venues/${venueId}?client_id=X4CMVBAJQSVZYXB45ZGE3GNA43RTCMPQTM4PUIKMQHFYWUVX&client_secret=ODC00AI1UEPGLLYLVUOY1JM30NE1XADBZRJMUNXKXPSZKNTR&v=20180323`)
+            .catch((e) => console.log('Error: ', e))
             .then((response) => response.json())
             .then((response) => response.response.venue);
     }
@@ -84,15 +75,14 @@ class MapContainer extends Component {
     
         return (
             <div>
-                <MapNav places={this.state.currentPlaces} onChange={this.updateCurrentPlaces}></MapNav>
                 <Map
                     google={this.props.google}
                     zoom={14}
                     style={style}
-                    initialCenter={this.props.places[0].location}
+                    initialCenter={this.props.centerCoords.location}
                     bounds={this.state.bounds}
                 >
-                    {this.state.currentPlaces.map((place, index) => 
+                    {this.props.places.map((place, index) =>  
                         <Marker
                             key={index}
                             name={place.name}
