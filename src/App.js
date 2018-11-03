@@ -72,8 +72,7 @@ class App extends Component {
         likes: ''
       },
     ],
-    currentPlaces: [],
-    requestAvailable: true
+    currentPlaces: []
   };
 
   componentDidMount() {
@@ -91,10 +90,9 @@ class App extends Component {
               place.likes = venueInfo.likes.count
               place.img = venueInfo.bestPhoto.prefix + size + venueInfo.bestPhoto.suffix
             })
-            .catch(() => this.setState({ requestAvailable: false })
-            )
+            .catch((e) => console.log(e));
         })
-        .catch((e) => alert(e));;
+        .catch((e) => console.log(e));
       return place;
     });
     this.setState({ currentPlaces: newPlaces })
@@ -121,7 +119,7 @@ class App extends Component {
     return (
       <div className="App">
         <MapNav places={this.state.currentPlaces} onQuery={this.filterPlaces} setActiveMarker={this.setActiveMarker} />
-        <MapContainer places={this.state.currentPlaces} centerCoords={this.state.places[0].location} activeMarker={this.state.activeMarker} showingInfoWindow={this.state.showingInfoWindow} requestAvailable={this.state.requestAvailable} /> 
+        <MapContainer places={this.state.currentPlaces} centerCoords={this.state.places[0].location} activeMarker={this.state.activeMarker} showingInfoWindow={this.state.showingInfoWindow} /> 
       </div>
     );
   }
