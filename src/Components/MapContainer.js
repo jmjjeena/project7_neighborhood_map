@@ -18,6 +18,7 @@ class MapContainer extends Component {
         this.setState({ center: this.props.centerCoords.location })
     }
 
+    // Set map bounds
     setBounds = () => {
         const bounds = new this.props.google.maps.LatLngBounds();
         for (let place of this.props.places) {
@@ -26,6 +27,7 @@ class MapContainer extends Component {
         this.setState({ bounds });
     }
 
+    // Display InfoWindow with marker data on click
     onMarkerClick = (props, marker) => {
         const place = this.props.places.filter((place) => place.name === props.title)
         this.setState({

@@ -7,6 +7,8 @@
   overflow: hidden;
 } */
 
+/* Top nav bar */
+
  .map-nav-container {
   overflow: hidden;
   position: absolute;
@@ -23,9 +25,25 @@
   
 }
 
-/* .map-nav h1 {
-  min-width: 100%
-} */
+.nav-title {
+  margin: auto;
+}
+ /* Hamburger from W3 schools */
+ .hamburger-container {
+  margin-left: .2rem;
+  cursor: pointer;
+  padding: 5px;
+  border: 0;
+  background-color: white;
+}
+ .hamburger-bar {
+  width: 35px;
+  height: 5px;
+  background-color: black;
+  margin: 6px 0;
+}
+ /* Sidebar */
+
 
 .map-sidebar {
   position: absolute;
@@ -47,30 +65,15 @@
   padding: 0;
 }
 
-.map-sidebar li {
+.map-sidebar button {
   padding: 1rem;
   cursor: pointer;
+  width: 100%;    
+  background-color: white;
+  border: 0px;
 }
 
- .map-sidebar li:hover {
+ .map-sidebar button:hover {
   background-color: black;
   color: white;
-}
-
-/* Hamburger from W3 schools */
- .hamburger-container {
-  margin-left: .2rem;
-  cursor: pointer;
-  padding: 5px;
-}
-
-.hamburger-bar {
-  width: 35px;
-  height: 5px;
-  background-color: black;
-  margin: 6px 0;
-}
-
-.nav-title {
-  margin: auto;
 }
