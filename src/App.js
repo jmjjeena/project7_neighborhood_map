@@ -90,12 +90,13 @@ class App extends Component {
               place.likes = venueInfo.likes.count
               place.img = venueInfo.bestPhoto.prefix + size + venueInfo.bestPhoto.suffix
             })
-            .catch((e) => console.log(e));
+            .catch(() => this.setState({ requestAvailable: false })
+            )
         })
-        .catch((e) => console.log(e));
+        .catch((e) => alert(e));
       return place;
     });
-    this.setState({ currentPlaces: newPlaces })
+    this.setState({ currentPlaces: newPlaces });
   }
 
    // Filter a new array of current places based on user query

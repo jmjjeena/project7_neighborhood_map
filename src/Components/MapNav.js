@@ -17,8 +17,7 @@ class MapNav extends Component {
         else {
             sidebar.style.transform = 'translateX(0px)'
             this.setState({ hamburgerActive: true });
-        }
-       
+        }      
     }
 
     render() {
@@ -31,7 +30,10 @@ class MapNav extends Component {
                             <div className="hamburger-bar"></div>
                             <div className="hamburger-bar"></div>
                         </button>
-                        <h1 className="nav-title">Must See SF Attractions</h1>
+                        <div className="nav-title">
+                            <h1>Must See SF Attractions</h1>
+                            <h4>Powered by FourSquare</h4>
+                        </div>
                     </nav>
                 </div>
                 <div className="map-sidebar">
